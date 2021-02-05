@@ -18,28 +18,57 @@ class _MyAppState extends State<MyApp> {
   final _questions = const [
     {
       'questionText': "What's your favorite color?",
-      'answers': ['Black', 'Red', "Green", "White"],
+      'answers': [
+        {"text": 'Black', "score": 10},
+        {"text": 'Red', "score": 5},
+        {"text": "Green", "score": 3},
+        {"text": "White", "score": 1}
+      ],
     },
     {
       'questionText': "What's your favorite animal?",
-      'answers': ['Rabbit', 'Snake', "Elephant", "Lion"],
+      'answers': [
+        {"text": 'Rabbit', "score": 3},
+        {"text": 'Snake', "score": 11},
+        {"text": "Elephant", "score": 4},
+        {"text": "Lion", "score": 9}
+      ],
     },
     {
       'questionText': "What's your favorite film?",
-      'answers': ['Pulp Fiction', 'Tenet', "Titanic", "Star Wars"],
+      'answers': [
+        {"text": 'Pulp Fiction', "score": 10},
+        {"text": 'Tenet', "score": 3},
+        {"text": "Titanic", "score": 5},
+        {"text": "Joker", "score": 8}
+      ],
     },
     {
       'questionText': "What's your favorite city?",
-      'answers': ['London', 'Paris', "Rome", "New York"],
+      'answers': [
+        {"text": 'London', "score": 10},
+        {"text": 'Paris', "score": 1},
+        {"text": "Rome", "score": 3},
+        {"text": "New York", "score": 5}
+      ],
     }
   ];
 
   var _questionIndex = 0;
+  var _totalScore = 0;
 
-  void _answerQuestion() {
+  void _reset() {
+    setState(() {
+      _questionIndex = 0;
+      _totalScore = 0;
+    });
+  }
+
+  void _answerQuestion(int score) {
     if (_questionIndex < _questions.length) {
       setState(() {
         _questionIndex += 1;
+        _totalScore += score;
       });
     }
   }
@@ -57,7 +86,10 @@ class _MyAppState extends State<MyApp> {
                 questionIndex: _questionIndex,
                 answerQuestion: _answerQuestion,
               )
-            : Result(),
+            : Result(
+                finalScore: _totalScore,
+                reset: _reset,
+              ),
       ),
     );
   }
